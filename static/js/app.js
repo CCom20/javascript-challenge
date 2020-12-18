@@ -10,6 +10,10 @@ var formButton = d3.select('#filter-btn');
 formDateTime.on('change', runFilter); 
 formButton.on('click', runFilter); 
 
+function refreshPage() {
+    return location.reload(true);
+}
+
 // Function to Filter and Display results
 function runFilter() {
     
@@ -19,22 +23,21 @@ function runFilter() {
 
     var tbody = d3.select('tbody');
 
-    var filteredData =dateInput.filter(sighting => sighting.datetime === dateInput)
+    var filteredData = data.filter(sighting => sighting.datetime === dateInput)
+    console.log(filteredData)
 
-    for (var i = 0; i < data.length; i++) {
+    tbody.html(""); 
 
-        if (dateInput == data[i].datetime) {
-            console.log(data[i].datetime);
-            
-            var newRow = tbody.append('tr');
+    for (var i = 0; i < filteredData.length; i++) {
+        
+        var newRow = tbody.append('tr');
 
-            newRow.append('td').text(`${data[i].datetime}`);
-            newRow.append('td').text(`${data[i].city}`);
-            newRow.append('td').text(`${data[i].state}`);
-            newRow.append('td').text(`${data[i].country}`);
-            newRow.append('td').text(`${data[i].shape}`);
-            newRow.append('td').text(`${data[i].durationMinutes}`);
-            newRow.append('td').text(`${data[i].comments}`);
-        }
+        newRow.append('td').text(`${filteredData[i].datetime}`);
+        newRow.append('td').text(`${filteredData[i].city}`);
+        newRow.append('td').text(`${filteredData[i].state}`);
+        newRow.append('td').text(`${filteredData[i].country}`);
+        newRow.append('td').text(`${filteredData[i].shape}`);
+        newRow.append('td').text(`${filteredData[i].durationMinutes}`);
+        newRow.append('td').text(`${filteredData[i].comments}`);
     }
 }
