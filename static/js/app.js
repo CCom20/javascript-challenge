@@ -1,11 +1,17 @@
 // from data.js
 var tableData = data;
-var tableKeys = ['datetime', 'city', 'state', 'country', 'shape', 'durationMinutes', 'comments']
 
-// Select the Input Field for Date Time and the Form Filter Button
+// Select overarching filter
+var searchFilter = d3.select("#searchFilter")
+
+// Select the Filter and Clear Search Buttons
+var formButton = d3.select('#filter-btn');
+
+var clearButton = d3.select('#clear-filter'); 
+
+// Select the Input Fields 
+
 var formDateTime = d3.select('#datetime'); 
-
-var formButton = d3.select('#filter-btn'); 
 
 var cityControl = d3.select('#city');
 
@@ -16,9 +22,23 @@ var countryControl = d3.select('#country');
 var shapeControl = d3.select('#shape');
 
 // Set functions to run on enter and form field change
-formDateTime.on('change', runFilter); 
-formDateTime.on('submit', runFilter); 
-formButton.on('click', runFilter); 
+searchFilter.on('change', runFilter);
+searchFilter.on('submit', runFilter);
+
+// Set ways to reset the filters
+formButton.on('click', runFilter);
+clearButton.on('click', resetFilter)
+
+// Set function to clear fields for new search 
+function resetFilter() {
+
+    document.getElementById("datetime").value = '';
+    document.getElementById("city").value = '';
+    document.getElementById("country").value = '';
+    document.getElementById("state").value = '';
+    document.getElementById("shape").value = '';
+
+}
 
 // Function to Filter and Display results
 function runFilter() {
@@ -78,6 +98,7 @@ function runFilter() {
         console.log(filteredData)
     }
 
+    // APPEND FILTERED DATA TO TABLE
     filteredData.forEach(function(entry) {
 
         var newRow = tbody.append('tr');
