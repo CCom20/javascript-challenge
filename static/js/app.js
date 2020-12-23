@@ -107,4 +107,6 @@ function runFilter() {
         newRow.append('td').text(entry[key])
         })
     })
+
+    resetFilter(); 
 }
